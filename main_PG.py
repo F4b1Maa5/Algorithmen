@@ -44,7 +44,7 @@ def writetocsv(month, name):
         csvwriter.writerow(['ID', 'Niderschlag'])
         csvwriter.writerows(month)
 
-def filterCSV_Month(month, asc):
+def filterCSV(month, asc):
     listEinträge.delete(0,END)
     jan.clear()
     feb.clear()
@@ -83,16 +83,16 @@ def filterCSV_Month(month, asc):
             writetocsv(jan, month)
             counter = 0
             for item in jan:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
         elif (month == 'feb'):
             feb.pop(0)
             quickSort(feb, 0, len(feb) - 1, asc)
             writetocsv(feb, month)
             counter = 0
             for item in feb:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return feb
         elif (month == 'mar'):
             mar.pop(0)
@@ -100,8 +100,8 @@ def filterCSV_Month(month, asc):
             writetocsv(mar, month)
             counter = 0
             for item in mar:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return mar
         elif (month == 'apr'):
             apr.pop(0)
@@ -109,8 +109,8 @@ def filterCSV_Month(month, asc):
             writetocsv(apr, month)
             counter = 0
             for item in apr:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return apr
         elif (month == 'mai'):
             mai.pop(0)
@@ -118,8 +118,8 @@ def filterCSV_Month(month, asc):
             writetocsv(mai, month)
             counter = 0
             for item in mai:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return mai
         elif (month == 'jun'):
             jun.pop(0)
@@ -127,8 +127,8 @@ def filterCSV_Month(month, asc):
             writetocsv(jun, month)
             counter = 0
             for item in jun:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return jun
         elif (month == 'jul'):
             jul.pop(0)
@@ -136,8 +136,8 @@ def filterCSV_Month(month, asc):
             writetocsv(jul, month)
             counter = 0
             for item in jul:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return jul
         elif (month == 'aug'):
             aug.pop(0)
@@ -145,8 +145,8 @@ def filterCSV_Month(month, asc):
             writetocsv(aug, month)
             counter = 0
             for item in aug:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return aug
         elif (month == 'sep'):
             sep.pop(0)
@@ -154,8 +154,8 @@ def filterCSV_Month(month, asc):
             writetocsv(sep, month)
             counter = 0
             for item in sep:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return sep
         elif (month == 'okt'):
             okt.pop(0)
@@ -163,8 +163,8 @@ def filterCSV_Month(month, asc):
             writetocsv(okt, month)
             counter = 0
             for item in okt:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return okt
         elif (month == 'nov'):
             nov.pop(0)
@@ -172,8 +172,8 @@ def filterCSV_Month(month, asc):
             writetocsv(nov, month)
             counter = 0
             for item in nov:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return nov
         elif (month == 'dez'):
             dez.pop(0)
@@ -181,8 +181,8 @@ def filterCSV_Month(month, asc):
             writetocsv(dez, month)
             counter = 0
             for item in dez:
-                listEinträge.insert(counter,[item[0],item[1]])
-                counter = counter +1
+                listEinträge.insert(counter, [item[0], item[1]])
+                counter = counter + 1
             return dez
         elif (month == 'jahr'):
             jahr.pop(0)
@@ -216,8 +216,8 @@ MONTH = [
 "jahr"
 ]
 
-monat_label = Label(tk, text='Monat', font=('bold', 14), bg='light blue')
-monat_label.grid(row=0, column=1, sticky=W)
+zeitraum_label = Label(tk, text='Zeitraum', font=('bold', 14), bg='light blue')
+zeitraum_label.grid(row=0, column=1, sticky=W)
 variable = StringVar(tk)
 variable.set(MONTH[0])
 w = OptionMenu(tk, variable, *MONTH)
@@ -237,7 +237,9 @@ scrollbar.grid(row=4, column=3)
 listEinträge.configure(yscrollcommand=scrollbar.set)
 scrollbar.configure(command=listEinträge.yview)
 
-searchMonth_btn = Button(tk, text='Suchen', width=15, command=lambda:filterCSV_Month(variable.get(), var1.get()))
-searchMonth_btn.grid(row=2, column=0, pady=20)
+search_btn = Button(tk, text='Suchen', width=15, command=lambda:filterCSV(variable.get(), var1.get()))
+search_btn.grid(row=2, column=0, pady=20)
+time_btn = Button(tk, text='Laufzeiten', width=15, command=laufzeit)
+time_btn.grid(row=2, column=2, pady=20)
 
 tk.mainloop()
