@@ -58,6 +58,7 @@ def filterCSV_Month(month, asc):
     okt.clear()
     nov.clear()
     dez.clear()
+    jahr.clear()
     with open('Niederschlag.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
         for row in reader:

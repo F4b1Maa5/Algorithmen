@@ -84,29 +84,31 @@ with open('Niederschlag.csv', newline='') as csvfile:
     startimer = time.time()
     bubblesort(feb)
     endtimer = time.time()
-    sorttimer.append(endtimer-startimer) 
+    sorttimer.append(round(endtimer-startimer,2)) 
 
     apr.pop(0)
     startimer = time.time()
     quickSort(apr,0,len(apr)-1,True)
     endtimer = time.time()
-    sorttimer.append(endtimer-startimer)
+    sorttimer.append(round(endtimer-startimer,2))
 
     mar.pop(0)
     startimer = time.time()
     selection_sort(mar)
     endtimer = time.time()
-    sorttimer.append(endtimer-startimer)
+    sorttimer.append(round(endtimer-startimer,2))
     
+def laufzeit():
+    xpoints = [1,2,3]
+    ypoints = [sorttimer[0],sorttimer[1],sorttimer[2]]
+    plt.plot(xpoints,ypoints,'o')
+    plt.text(xpoints[0],ypoints[0], 'Bubblesort in '+str(sorttimer[0])+ ' sek')
+    plt.text(xpoints[1],ypoints[1], 'Quicksort in '+str(sorttimer[1])+ ' sek')
+    plt.text(xpoints[2],ypoints[2], 'Selectionsort in '+str(sorttimer[2])+ ' sek')
+    plt.axis([0, 4, 0 , 20])
+    plt.ylabel("Laufzeit in s")
+    plt.xlabel("Sortieralgorithmen")
+    plt.xticks([1,2,3])
+    plt.show()
 
-xpoints = [1,2,3]
-ypoints = [sorttimer[0],sorttimer[1],sorttimer[2]]
-plt.plot(xpoints,ypoints,'o')
-plt.text(xpoints[0],ypoints[0], 'Bubblesort in '+str(sorttimer[0])+ ' sek')
-plt.text(xpoints[1],ypoints[1], 'Quicksort in '+str(sorttimer[1])+ ' sek')
-plt.text(xpoints[2],ypoints[2], 'Selectionsort in '+str(sorttimer[2])+ ' sek')
-plt.axis([0, 4, 0 , 20])
-plt.ylabel("Laufzeit in s")
-plt.xlabel("Sortieralgorithmen")
-plt.xticks([1,2,3])
-plt.show()
+laufzeit()
