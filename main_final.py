@@ -1,12 +1,12 @@
+# import der benoetigeten Pakete
 from tkinter import *
 import csv
 import os
-
-
 import csv
 import time
 import matplotlib.pyplot as plt
 
+#inizialiesierung der benoetigten globalen Variablen
 sorttimer = []
 jan = []
 feb = []
@@ -22,6 +22,7 @@ nov = []
 dez = []
 jahr = []
 
+# Die Funktion fuer Quicksort fuer die Laufzeitauswertung
 def partition_laufzeit(array, low, high,asc):
     pivot = array[high]
     i = low - 1
@@ -36,13 +37,15 @@ def partition_laufzeit(array, low, high,asc):
                 (array[i], array[j]) = (array[j], array[i])
     (array[i + 1], array[high]) = (array[high], array[i + 1])
     return i + 1 
- 
+
+# Die Funktion fuer Quicksort fuer die Laufzeitauswertung
 def quickSort_laufzeit(array, low, high,asc):
     if low < high:
         pi = partition_laufzeit(array, low, high,asc)
         quickSort_laufzeit(array, low, pi - 1,asc)
         quickSort_laufzeit(array, pi + 1, high,asc)
 
+# Bubblesort fuer die Laufzeitauswertung
 def bubblesort(tosortarray):
     n = len(tosortarray)
     swapped = False
@@ -55,20 +58,23 @@ def bubblesort(tosortarray):
             return
     return tosortarray
 
+# Selection sort fuer die Laufzeitauswertung
+
 def selection_sort(arr):
     for i in range(len(arr)):
-        # Find the minimum element in remaining unsorted array
+        # finde das minimale Element in dem unsortierten Arraz
         min_idx = i
         for j in range(i+1, len(arr)):
             if float(arr[min_idx][1]) > float(arr[j][1]):
                 min_idx = j
-        # Swap the found minimum element with the first element        
+        # wechsel das gefundene kleinste Element mit dem aktuellen elemenet       
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
     return arr
 
 
-    
+# Methode um die Laufzeit der Algorithmen zu berechnen
 def laufzeit():
+    # einlesen der CSV und aufteilung in die Globalen variablen
     with open('Niederschlag.csv', newline='') as csvfile:
         reader = csv.reader(csvfile,delimiter=';')
         for row in reader:
@@ -87,9 +93,13 @@ def laufzeit():
                 dez.append([str(row[0]),row[13]])
                 jahr.append([str(row[0]),row[14]])
 
+    # loesche das 0te Element da Monatsbezeichnung als 0 in der CSV vorhanden ist
     feb.pop(0)
+    # stratzeitpunkt ermitteln
     startimer = time.time()
+    #algorthimus ausfueren 
     bubblesort(feb)
+    # endzaeit ermitteln
     endtimer = time.time()
     sorttimer.append(round(endtimer-startimer,2)) 
 
@@ -105,6 +115,7 @@ def laufzeit():
     endtimer = time.time()
     sorttimer.append(round(endtimer-startimer,2))
 
+    # Diagramm zeichen und Werte ausgeben
     xpoints = [1,2,3]
     ypoints = [sorttimer[0],sorttimer[1],sorttimer[2]]
     plt.plot(xpoints,ypoints,'o')
@@ -117,7 +128,7 @@ def laufzeit():
     plt.xticks([1,2,3])
     plt.show()
 
-
+# Quicksort fuer die Eigentliche sortierung
 def partition(array, low, high, asc):
     pivot = array[high]
     i = low - 1
@@ -139,15 +150,21 @@ def quickSort(array, low, high, asc):
         quickSort(array, low, pi - 1, asc)
         quickSort(array, pi + 1, high, asc)
 
+# Methode um die neue CSV fuer den Monat zu schreiben
 def writetocsv(month, name):
+    #den aktuellen Pfad bestimmen
     path = os.path.dirname(__file__) + '/'
+    # neue CSV schreiben
     with open(path + name + '.csv', mode='w+', newline='') as csvfile:
         csvwriter = csv.writer(csvfile, delimiter=";")
         csvwriter.writerow(['ID', 'Niderschlag'])
         csvwriter.writerows(month)
 
+# Methode um die CSV zu filtern
 def filterCSV(month, asc):
+    # Alle eintraege aus der GUI loeschen
     listEinträge.delete(0,END)
+    # Alle golbaelen Variablen leeren
     jan.clear()
     feb.clear()
     mar.clear()
@@ -161,6 +178,7 @@ def filterCSV(month, asc):
     nov.clear()
     dez.clear()
     jahr.clear()
+    # CSV einlesen
     with open('Niederschlag.csv', newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';')
         for row in reader:
@@ -178,12 +196,16 @@ def filterCSV(month, asc):
                 nov.append([str(row[0]), row[12]])
                 dez.append([str(row[0]), row[13]])
                 jahr.append([str(row[0]), row[14]])
-
+        # Entsprechend nach der Nutzereinagbe den entsprechenden Monat filtern und in die GUI eintragen
         if (month == 'jan'):
+            # das 0te Element loeschen, da das 0te Element der Monatsname in der CSV ist
             jan.pop(0)
+            #quicksort fuer den ausgewaehlten Monat anwenden
             quickSort(jan, 0, len(jan) - 1, asc)
+            # das Sortierte Ergebnis in eine Neue CSV schreiben
             writetocsv(jan, month)
             counter = 0
+            # Die Sortierten Elemente in der GUI anzeigen
             for item in jan:
                 listEinträge.insert(counter, [item[0], item[1]])
                 counter = counter + 1
@@ -295,6 +317,8 @@ def filterCSV(month, asc):
                 listEinträge.insert(counter, [item[0], item[1]])
                 counter = counter + 1
             return jahr
+
+# GUI erzeugen
 
 tk = Tk()
 tk.title('Niederschlagsverwaltung')
