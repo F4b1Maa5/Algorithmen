@@ -74,6 +74,9 @@ def selection_sort(arr):
 
 # Methode um die Laufzeit der Algorithmen zu berechnen
 def laufzeit():
+    feb.clear()
+    mar.clear()
+    apr.clear()
     # einlesen der CSV und aufteilung in die Globalen variablen
     with open('Niederschlag.csv', newline='') as csvfile:
         reader = csv.reader(csvfile,delimiter=';')
